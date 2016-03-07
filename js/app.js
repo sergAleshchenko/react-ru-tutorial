@@ -13,6 +13,20 @@ var my_news = [
   }
 ];
 
+var Article = React.createClass({
+  render: function() {
+    var author = this.props.data.author,
+        text = this.props.data.text;
+
+    return (
+      <div className='article'>
+        <p className='news__author'>{author}:</p>
+        <p className='news__text'>{text}</p>
+      </div>
+    )
+  }
+});
+
 var News = React.createClass({
   render: function() {
     var data = this.props.data;
@@ -22,8 +36,7 @@ var News = React.createClass({
       newsTemplate = data.map(function(item, index) {
         return (
           <div key={index}>
-            <p className="news__author">{item.author}:</p>
-            <p className="news__text">{item.text}</p>
+            <Article data={item} />
           </div>
         )
       })
@@ -32,19 +45,9 @@ var News = React.createClass({
     }
 
     return (
-      <div className="news">
+      <div className='news'>
         {newsTemplate}
-        <strong className={data.length > 0 ? '':'none'}>Всего новостей: {data.length}</strong>
-      </div>
-    );
-  }
-});
-
-var Comments = React.createClass({
-  render: function() {
-    return (
-      <div className="comments">
-        Нет новостей - комментировать нечего
+        <strong className={'news__count ' + (data.length > 0 ? '':'none') }>Всего новостей: {data.length}</strong>
       </div>
     );
   }
@@ -53,10 +56,9 @@ var Comments = React.createClass({
 var App = React.createClass({
   render: function() {
     return (
-      <div className="app">
-        Всем привет, я компонент App! Я умею отображать новости.
+      <div className='app'>
+        <h3>Новости</h3>
         <News data={my_news} />
-        <Comments />
       </div>
     );
   }
