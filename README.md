@@ -1,2 +1,2 @@
 # react-ru-tutorial
-Код для раздела [Использование state](https://maxfarseer.gitbooks.io/react-course-ru/content/ispolzovanie_state.html)
+Код для раздела [Продвинутое использование state](https://maxfarseer.gitbooks.io/react-course-ru/content/prodvinutoe_ispolzovanie.html)
