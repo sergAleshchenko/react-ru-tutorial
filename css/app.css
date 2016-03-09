@@ -53,3 +53,7 @@ p {
   text-transform: uppercase;
   background: #007DDC;
 }
+.add__btn:disabled {
+  background: #CCC;
+  color: #999;
+}

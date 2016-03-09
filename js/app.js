@@ -90,35 +90,61 @@ var News = React.createClass({
 });
 
 var Add = React.createClass({
+  getInitialState: function() {
+    return {
+      agreeNotChecked: true,
+      authorIsEmpty: true,
+      textIsEmpty: true
+    };
+  },
   componentDidMount: function() {
     ReactDOM.findDOMNode(this.refs.author).focus();
   },
-  onBtnClickHandler: function() {
-    {/* пока пусто */}
+  onBtnClickHandler: function(e) {
+    e.preventDefault();
+    var author = ReactDOM.findDOMNode(this.refs.author).value;
+    var text = ReactDOM.findDOMNode(this.refs.text).value;
+    alert(author + '\n' + text);
+  },
+  onCheckRuleClick: function(e) {
+    this.setState({agreeNotChecked: !this.state.agreeNotChecked});
+  },
+  onFieldChange: function(fieldName, e) {
+    if (e.target.value.trim().length > 0) {
+      this.setState({[''+fieldName]:false})
+    } else {
+      this.setState({[''+fieldName]:true})
+    }
   },
   render: function() {
+    var agreeNotChecked = this.state.agreeNotChecked,
+        authorIsEmpty = this.state.authorIsEmpty,
+        textIsEmpty = this.state.textIsEmpty;
     return (
       <form className='add cf'>
         <input
           type='text'
           className='add__author'
-          defaultValue=''
+          onChange={this.onFieldChange.bind(this, 'authorIsEmpty')}
           placeholder='Ваше имя'
           ref='author'
         />
         <textarea
           className='add__text'
-          defaultValue=''
+          onChange={this.onFieldChange.bind(this, 'textIsEmpty')}
           placeholder='Текст новости'
           ref='text'
         ></textarea>
         <label className='add__checkrule'>
-          <input type='checkbox' defaultChecked={false} ref='author' />Я согласен с правилами
+          <input type='checkbox' ref='checkrule' onChange={this.onCheckRuleClick}/>Я согласен с правилами
         </label>
+
         <button
           className='add__btn'
           onClick={this.onBtnClickHandler}
-          ref='alert_button'>
+          ref='alert_button'
+          disabled={agreeNotChecked || authorIsEmpty || textIsEmpty}
+          >
           Показать alert
         </button>
       </form>
